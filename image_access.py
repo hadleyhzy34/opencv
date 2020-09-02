@@ -3,35 +3,33 @@ print ("package improted")
 
 print('Opencv version {0}'.format(cv2.__version__))
 
+path = 'Resources/'
+
 # reading and showing images that stored in current project folder Resources
 img = cv2.imread("Resources/base.jpeg")
 
+# imread second argument could be cv2.IMREAD_COLOR, cv2.IMREAD_COLOR, cv2.IMREAD_UNCHANGED
+# instead of using three flags, you can simply pass integers 1, 0, -1 respectively
+
+img = cv2.imread('Resources/base.jpeg',0)
+
+# first argument is a window name which is a string
 cv2.imshow("Output",img)
-cv2.waitKey(0)
+# if 0 is passed, it waits indefinitely for a key stroke, for specified milliseconds
+k = cv2.waitKey(0) & 0xFF
+if k == 27:
+    cv2.destroyAllWindows()
+elif k == ord('s'): #wait for 's' key to save adn exit
+    # write an image
+    cv2.imwrite(path+'newWritten2.jpeg', img)
+    cv2.destroyAllWindows()
 
-# capturing videos
-cap = cv2.VideoCapture("Resources/oldFriend.mp4")
 
-while True:
-# img stores all img frames of the video, success tells if it reads video successfully or not
-    success, img = cap.read()
-    cv2.imshow("Video", img)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+##using matplotlib
+from matplotlib import pyplot as plt
 
-# using webcam, remember running this part of code directly will result in python crash, runnign this python file from terminal to get full access from laptop
-# 0 represent default webcam of your pc
-cap = cv2.VideoCapture(0)
-# 3 represent x
-cap.set(3,640)
-# 4 represent y
-cap.set(4,480)
-#change birghtness of webcam using parameter 10
-cap.set(10,100)
+plt.imshow(img, cmap = 'gray', interpolation = 'bicubic')
+plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
+plt.show()
 
-while True:
-    success, img = cap.read()
-    cv2.imshow("Video", img)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
+#warning: color image loaded by opencv is in BGR mode while Matplotlib displays in RGB mode, is ti will not be displayed 
