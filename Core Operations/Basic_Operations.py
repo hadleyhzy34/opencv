@@ -51,10 +51,10 @@ cv2.waitKey(0)
 #splitting and merging image channels
 #B,G,R channels of an image can be split into their individual planes
 b, g, r = cv2.split(img)
-img = cv2.merge(b,g,r)
+img = cv2.merge((b,g,r))
 #making all red channels to be zero
 img[:,:,2] = 0
-remember that cv2.split() is a costly operation so use it if necessary
+# remember that cv2.split() is a costly operation so use it if necessary
 
 #padding
 from matplotlib import pyplot as plt
